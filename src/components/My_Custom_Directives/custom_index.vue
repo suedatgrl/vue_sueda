@@ -3,6 +3,7 @@
     <div v-awesome:blue ="textToRender"></div>
     <div v-awesome ="'Awesome text of custom index'"></div>
     
+    
 </template>
 
 <script setup>
