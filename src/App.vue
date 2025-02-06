@@ -51,21 +51,49 @@
             <div>
                 <Directives/>
             </div>
+
+            <div>
+                <Contact/>    
+            </div>
+
+            <div>
+                <button 
+                    type="button" 
+                    class="btn btn-primary me-3"
+                    @click="activeComponentTwo = Users"
+                >Users</button>
+
+                <button 
+                    type="button" 
+                    class="btn btn-secondary"
+                    @click="activeComponentTwo = AddUsers"
+                >Add users</button>
+
+                <component :is="activeComponentTwo"></component>
+            </div>
+           
         </div>
     </div>
 </template>
 
 <script setup>
     import Directives from '@/components/My_Custom_Directives/custom_index.vue' 
+
     import { ref, reactive, provide } from 'vue';
     import Life from '@/components/Life/index.vue';
     import UserProfile from './components/User/Profile.vue';
+
     import Cars from './components/Cars/index.vue';
     import Car_Brands from './components/Cars/brands.vue';
+
     import Mike from './components/Dynmc_compnnt_my_exmple/Mike.vue'
     import Sü from './components/Dynmc_compnnt_my_exmple/Sü.vue'
     import { shallowRef } from 'vue';
+    import Contact from './components/Contact/index.vue'
 
+    import Users from './components/UsersDB/users.vue';
+    import AddUsers from './components/UsersDB/addUser.vue';
+    
     const showIt = ref(true);
 
     const brands = reactive(['Mazda', 'Honda', 'Renault'])
@@ -78,7 +106,7 @@
             father: 'Mario',
             mother: 'Martha'
         }
-    })
+    }) 
     console.log("İN SETUP APP.VUE");
     const updateName = () => {
         data.name = "Golden child"
@@ -106,7 +134,8 @@
         updateCar
     })
 
-    const activeComponent = shallowRef(Mike);
+    // const activeComponent = shallowRef(Mike);
+    const activeComponentTwo = shallowRef(Users);
 </script>
 
 <style>
@@ -121,4 +150,9 @@ body {
     box-sizing: border-box;
     padding: 20px;
 }
+/* .btn {
+    border: 1px solid #2196F3; 
+    padding: 10px;
+    margin: 1%;
+} */
 </style>
