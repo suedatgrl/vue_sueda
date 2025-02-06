@@ -2,15 +2,26 @@
     <div>
         <app-header />
         <p>(BurasıApp.vue ilk satırlar: containerın dışı)</p>
+
         <div class="container">
-            <UserProfile :alsoKnownAs="data.name" :userLastname="data.lastname" :userAge="data.age"
-                :userParents="data.parents" @update-lastname="data.lastname = $event" @say-hello="alertHello"
+            <div>
+                <UserProfile 
+                :alsoKnownAs="data.name" 
+                :userLastname="data.lastname" 
+                :userAge="data.age"
+                :userParents="data.parents" 
+                @update-lastname="data.lastname = $event" 
+                @say-hello="alertHello"
                 :updateAge="updateAge" />
-            <button @click="updateName"> Update name</button>
-            <Cars />
-            <hr />
-            <button @click="updateCar">Update</button>
-            <p>(BurasıApp.vue son satırlar ayrıca containerın içi )</p>
+                <button @click="updateName"> Update name</button>
+            </div>
+
+            <div>
+                <Cars />
+                <hr />
+                <button @click="updateCar">Update</button>
+            </div>
+
             <div>
                 <Car_Brands>
                     <template v-slot:Rasgelename_Brands>
@@ -22,16 +33,42 @@
                     </template>
                 </Car_Brands>
             </div>
+
+            <div>
+                <Life v-if="showIt" />
+                <hr />
+                <button @click="showIt = !showIt">Toggle</button>
+            </div>
+
+            <div>
+                <h4>Here is the active component things:</h4>
+                <button @click="activeComponent = Mike">Mike</button>
+                <button @click="activeComponent = Sü">Sü</button>
+               
+                <component :is="activeComponent"></component>
+            </div>
+
+            <div>
+                <Directives/>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-    const brands = reactive(['Mazda', 'Honda', 'Renault'])
+    import Directives from '@/components/My_Custom_Directives/custom_index.vue' 
+    import { ref, reactive, provide } from 'vue';
+    import Life from '@/components/Life/index.vue';
     import UserProfile from './components/User/Profile.vue';
-    import { reactive, provide } from 'vue';
     import Cars from './components/Cars/index.vue';
     import Car_Brands from './components/Cars/brands.vue';
+    import Mike from './components/Dynmc_compnnt_my_exmple/Mike.vue'
+    import Sü from './components/Dynmc_compnnt_my_exmple/Sü.vue'
+    import { shallowRef } from 'vue';
+
+    const showIt = ref(true);
+
+    const brands = reactive(['Mazda', 'Honda', 'Renault'])
     console.log("REACTİVE PART APP.VUE");
     const data = reactive({
         name: 'Rocket',
@@ -52,7 +89,7 @@
     const updateAge = (value) => {
         data.age = value;
     }
-    
+
     //SCRİPT of CARS PART's
     const cars = reactive([
         { model: 'F9', brand: 'Ferrari' },
@@ -68,6 +105,8 @@
         cars,
         updateCar
     })
+
+    const activeComponent = shallowRef(Mike);
 </script>
 
 <style>
@@ -78,7 +117,7 @@ body {
 }
 
 .container {
-    min-height: 84vh;
+    min-height: auto; 
     box-sizing: border-box;
     padding: 20px;
 }
